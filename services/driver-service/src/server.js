@@ -1,23 +1,52 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import { createPool } from './config/database.js';
+import dotenv from "dotenv";
+import express from "express";
+import helmet from "helmet";
+import morgan from "morgan";
+import { createPool } from "./config/database.js";
+import { driverRouter } from "./routes/drivers.js";
+import { ensureDriverTable } from "./models/driver.js";
 
 dotenv.config();
 
-// Initialize Database Pool
-createPool();
-
 const app = express();
 
-// Middleware
+// Middlewares
+app.use(helmet());
 app.use(express.json());
-
-app.get('/', (req, res) => {
-    res.send('Driver service is running with PostgreSQL!');
-});
+app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
 const PORT = process.env.PORT || 3003;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Database initialization
+const pool = createPool();
+
+// Attach DB pool to all requests
+app.use((req, _res, next) => {
+    req.db = pool;
+    next();
 });
+
+// Health check endpoint
+app.get("/health", (_req, res) => {
+    res.json({ status: "ok", service: "driver-service" });
+});
+
+// API routes
+app.use("/api/drivers", driverRouter);
+
+// Start server function
+const startServer = async() => {
+    try {
+        await ensureDriverTable(pool);
+        console.log('"drivers" table checked/created successfully.');
+
+        app.listen(PORT, () => {
+            console.log(`Driver service listening on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+    }
+};
+
+startServer();
