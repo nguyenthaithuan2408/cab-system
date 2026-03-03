@@ -1,4 +1,8 @@
 export async function ensureUserTable(pool) {
+    // Enable the pgcrypto extension if it's not already enabled.
+    // This is required for gen_random_uuid().
+    await pool.query('CREATE EXTENSION IF NOT EXISTS "pgcrypto";');
+
     await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
