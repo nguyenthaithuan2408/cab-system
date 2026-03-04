@@ -1,0 +1,23 @@
+{
+    "name": "driver-service",
+    "version": "1.0.0",
+    "description": "Driver service for Cab Booking System",
+    "main": "src/server.js",
+    "type": "module",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon src/server.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "helmet": "^7.1.0",
+        "morgan": "^1.10.0",
+        "kafkajs": "^2.2.4",
+        "pg": "^8.11.3",
+        "redis": "^4.6.10"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}
