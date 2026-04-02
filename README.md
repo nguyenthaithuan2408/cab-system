@@ -235,9 +235,15 @@ This project serves as a comprehensive **System Design Document** suitable for:
    # Edit .env with your configuration
    ```
 
-4. **Start infrastructure services**
+4. **Start MongoDB local (free) for Review Service**
    ```bash
-   docker-compose up -d postgres mongodb redis kafka
+   docker compose -f docker-compose.mongo.yml up -d
+   ```
+   Use this URI in `services/review-service/.env`:
+   ```env
+   MONGO_URI=mongodb://localhost:27018
+   MONGO_DB_NAME=review_service_db
+   MONGO_REVIEW_COLLECTION=reviews
    ```
 
 5. **Run microservices**
