@@ -1,0 +1,22 @@
+function sendSuccess(res, statusCode, data) {
+  return res.status(statusCode).json({
+    success: true,
+    data
+  });
+}
+
+function sendError(res, statusCode, message, code = 'ERROR', details = null) {
+  return res.status(statusCode).json({
+    success: false,
+    error: {
+      message,
+      code,
+      details
+    }
+  });
+}
+
+module.exports = {
+  sendSuccess,
+  sendError
+};
