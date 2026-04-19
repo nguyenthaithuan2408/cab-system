@@ -1,42 +1,29 @@
 # Review Service
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## Overview
 Review Service lưu trữ ratings & feedback cho tài xế/booking.
+=======
+## Purpose
+Review Service lưu trữ rating và feedback cho tài xế/booking.
+>>>>>>> origin/service/payment
 
-## Responsibilities
-- Quản lý review theo booking/user/driver.
-- Cung cấp thống kê điểm trung bình cho tài xế.
-- Hỗ trợ soft delete review.
+## Default Config
+- Port: `3008`
+- Database: MongoDB
+- Collection bootstrap khi service khởi động: `reviews`
 
-## Main Features
-- Create review.
-- Get review by id.
-- List reviews by driverId.
-- List reviews by userId.
-- List reviews by bookingId.
-- Update review.
-- Delete review (soft delete).
-- Driver rating summary.
-- Health check endpoint.
+## Required Environment
+Tạo `.env` từ `.env.example`:
 
-## Project Structure
-- `src/app.js`: middleware + routes + errors.
-- `src/server.js`: bootstrap app + MongoDB.
-- `src/config/database.js`: MongoDB client + indexes bootstrap.
-- `src/models/review.model.js`: mapper document -> response.
-- `src/repositories/review.repository.js`: data access.
-- `src/services/review.service.js`: business logic + validation.
-- `src/controllers/review.controller.js`: HTTP handlers.
-- `src/routes/review.route.js`: route definitions.
-- `src/events/*`: event stubs.
-- `src/utils/*`: helper utilities.
+```bash
+cp .env.example .env
+```
 
-## Environment Variables
-Xem `.env.example`.
-
-Biến chính:
+Biến quan trọng:
 - `PORT`
+<<<<<<< HEAD
 - `SERVICE_NAME`
 - `NODE_ENV`
 - `LOG_LEVEL`
@@ -59,24 +46,38 @@ cp .env.example .env
 Biến quan trọng:
 - `PORT`
 >>>>>>> origin/service/driver
+=======
+>>>>>>> origin/service/payment
 - `MONGO_URI`
 - `MONGO_DB_NAME`
 - `MONGO_REVIEW_COLLECTION`
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## How To Run Locally
+=======
+Mongo mặc định trong `.env.example` là `mongodb://localhost:27018` (khớp `docker-compose.mongo.yml`).
+
+## Run Local
+>>>>>>> origin/service/payment
 ```bash
-cd services/review-service
 npm install
+npm run dev
+```
+
+Hoặc production mode:
+```bash
 npm run start
 ```
 
-## Available Scripts
-- `npm run start`
-- `npm run dev`
+## Smoke Test
+```bash
+npm test
+```
 
-## Main API Endpoints
+## Health Check
 - `GET /health`
+<<<<<<< HEAD
 =======
 Mongo mặc định trong `.env.example` là `mongodb://localhost:27018` (khớp `docker-compose.mongo.yml`).
 
@@ -102,6 +103,11 @@ npm test
 
 ## Main APIs
 >>>>>>> origin/service/driver
+=======
+- Ví dụ: `curl http://localhost:3008/health`
+
+## Main APIs
+>>>>>>> origin/service/payment
 - `POST /reviews`
 - `GET /reviews/:id`
 - `GET /reviews/by-driver/:driverId`
@@ -111,6 +117,7 @@ npm test
 - `DELETE /reviews/:id`
 - `GET /reviews/summary/driver/:driverId`
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ## Sample Request / Response
 ### Create Review
@@ -154,3 +161,7 @@ Collection: `reviews`
 ## Notes
 - Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
 >>>>>>> origin/service/driver
+=======
+## Notes
+- Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
+>>>>>>> origin/service/payment
