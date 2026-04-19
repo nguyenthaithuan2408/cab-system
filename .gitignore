@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/service/review
 node_modules/
 
 # Environment files
@@ -13,6 +16,7 @@ services/*/.env.*
 # Logs
 *.log
 npm-debug.log*
+<<<<<<< HEAD
 =======
 # Dependencies
 node_modules/
@@ -147,3 +151,5 @@ postgres_data/
 # Redis data
 redis_data/
 >>>>>>> origin/service/notification
+=======
+>>>>>>> origin/service/review
