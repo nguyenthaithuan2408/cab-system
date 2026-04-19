@@ -89,6 +89,146 @@ services:
       timeout: 5s
       retries: 5
 
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+    container_name: api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - REDIS_URL=redis://redis:6379
+      - AUTH_SERVICE_URL=http://auth-service:3001
+      - BOOKING_SERVICE_URL=http://booking-service:3002
+      - RIDE_SERVICE_URL=http://ride-service:3003
+      - PRICING_SERVICE_URL=http://pricing-service:3004
+      - PAYMENT_SERVICE_URL=http://payment-service:3005
+      - JWT_PUBLIC_KEY=$JWT_PUBLIC_KEY
+    depends_on:
+      - redis
+    networks:
+      - cab-network
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+    container_name: auth-service
+    environment:
+      - PORT=3001
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+      - JWT_PRIVATE_KEY=$JWT_PRIVATE_KEY
+      - JWT_PUBLIC_KEY=$JWT_PUBLIC_KEY
+      - JWT_EXPIRES_IN=1d
+      - REFRESH_TOKEN_EXPIRES_IN=7d
+    depends_on:
+      - postgres
+    networks:
+      - cab-network
+
+  booking-service:
+    build:
+      context: ./services/booking-service
+    container_name: booking-service
+    environment:
+      - PORT=3002
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      - postgres
+      - kafka
+    networks:
+      - cab-network
+
+  ride-service:
+    build:
+      context: ./services/ride-service
+    container_name: ride-service
+    environment:
+      - PORT=3003
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      - postgres
+      - kafka
+    networks:
+      - cab-network
+
+  pricing-service:
+    build:
+      context: ./services/pricing-service
+    container_name: pricing-service
+    environment:
+      - PORT=3004
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+    depends_on:
+      - postgres
+    networks:
+      - cab-network
+
+  payment-service:
+    build:
+      context: ./services/payment-service
+    container_name: payment-service
+    environment:
+      - PORT=3005
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      - postgres
+      - kafka
+    networks:
+      - cab-network
+
+  notification-service:
+    build:
+      context: ./services/notification-service
+    container_name: notification-service
+    environment:
+      - PORT=3006
+      - MONGO_URI=mongodb://admin:password@mongodb:27017/notification
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      - mongodb
+      - kafka
+    networks:
+      - cab-network
+
+  driver-service:
+    build:
+      context: ./services/driver-service
+    container_name: driver-service
+    environment:
+      - PORT=3007
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+    depends_on:
+      - postgres
+    networks:
+      - cab-network
+
+  review-service:
+    build:
+      context: ./services/review-service
+    container_name: review-service
+    environment:
+      - PORT=3008
+      - MONGO_URI=mongodb://admin:password@mongodb:27017/review
+    depends_on:
+      - mongodb
+    networks:
+      - cab-network
+
+  user-service:
+    build:
+      context: ./services/user-service
+    container_name: user-service
+    environment:
+      - PORT=3009
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+    depends_on:
+      - postgres
+    networks:
+      - cab-network
+
 volumes:
   mongodb_data:
   postgres_data:
