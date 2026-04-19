@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## Overview
 Review Service lưu trữ ratings & feedback cho tài xế/booking.
 =======
@@ -31,6 +32,8 @@ Biến quan trọng:
 =======
 =======
 >>>>>>> origin/service/review
+=======
+>>>>>>> origin/service/user
 ## Purpose
 Review Service lưu trữ rating và feedback cho tài xế/booking.
 
@@ -49,15 +52,19 @@ cp .env.example .env
 Biến quan trọng:
 - `PORT`
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/service/driver
 =======
 >>>>>>> origin/service/payment
 =======
 >>>>>>> origin/service/review
+=======
+>>>>>>> origin/service/user
 - `MONGO_URI`
 - `MONGO_DB_NAME`
 - `MONGO_REVIEW_COLLECTION`
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -88,6 +95,8 @@ npm test
 =======
 =======
 >>>>>>> origin/service/review
+=======
+>>>>>>> origin/service/user
 Mongo mặc định trong `.env.example` là `mongodb://localhost:27018` (khớp `docker-compose.mongo.yml`).
 
 ## Run Local
@@ -112,6 +121,7 @@ npm test
 
 ## Main APIs
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/service/driver
 =======
 - Ví dụ: `curl http://localhost:3008/health`
@@ -120,6 +130,8 @@ npm test
 >>>>>>> origin/service/payment
 =======
 >>>>>>> origin/service/review
+=======
+>>>>>>> origin/service/user
 - `POST /reviews`
 - `GET /reviews/:id`
 - `GET /reviews/by-driver/:driverId`
@@ -129,6 +141,7 @@ npm test
 - `DELETE /reviews/:id`
 - `GET /reviews/summary/driver/:driverId`
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -182,3 +195,7 @@ Collection: `reviews`
 ## Notes
 - Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
 >>>>>>> origin/service/review
+=======
+## Notes
+- Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
+>>>>>>> origin/service/user
