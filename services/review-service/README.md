@@ -1,15 +1,7 @@
 # Review Service
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## Overview
 Review Service lưu trữ ratings & feedback cho tài xế/booking.
-=======
-## Purpose
-Review Service lưu trữ rating và feedback cho tài xế/booking.
->>>>>>> origin/service/payment
 
 ## Default Config
 - Port: `3008`
@@ -25,81 +17,16 @@ cp .env.example .env
 
 Biến quan trọng:
 - `PORT`
-<<<<<<< HEAD
 - `SERVICE_NAME`
 - `NODE_ENV`
 - `LOG_LEVEL`
-=======
-=======
->>>>>>> origin/service/review
-=======
->>>>>>> origin/service/user
-## Purpose
-Review Service lưu trữ rating và feedback cho tài xế/booking.
-
-## Default Config
-- Port: `3008`
-- Database: MongoDB
-- Collection bootstrap khi service khởi động: `reviews`
-
-## Required Environment
-Tạo `.env` từ `.env.example`:
-
-```bash
-cp .env.example .env
-```
-
-Biến quan trọng:
-- `PORT`
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/service/driver
-=======
->>>>>>> origin/service/payment
-=======
->>>>>>> origin/service/review
-=======
->>>>>>> origin/service/user
 - `MONGO_URI`
 - `MONGO_DB_NAME`
 - `MONGO_REVIEW_COLLECTION`
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## How To Run Locally
-=======
 Mongo mặc định trong `.env.example` là `mongodb://localhost:27018` (khớp `docker-compose.mongo.yml`).
 
-## Run Local
->>>>>>> origin/service/payment
-```bash
-npm install
-npm run dev
-```
-
-Hoặc production mode:
-```bash
-npm run start
-```
-
-## Smoke Test
-```bash
-npm test
-```
-
-## Health Check
-- `GET /health`
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/service/review
-=======
->>>>>>> origin/service/user
-Mongo mặc định trong `.env.example` là `mongodb://localhost:27018` (khớp `docker-compose.mongo.yml`).
-
-## Run Local
 ```bash
 npm install
 npm run dev
@@ -120,18 +47,6 @@ npm test
 - Ví dụ: `curl http://localhost:3008/health`
 
 ## Main APIs
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> origin/service/driver
-=======
-- Ví dụ: `curl http://localhost:3008/health`
-
-## Main APIs
->>>>>>> origin/service/payment
-=======
->>>>>>> origin/service/review
-=======
->>>>>>> origin/service/user
 - `POST /reviews`
 - `GET /reviews/:id`
 - `GET /reviews/by-driver/:driverId`
@@ -141,10 +56,6 @@ npm test
 - `DELETE /reviews/:id`
 - `GET /reviews/summary/driver/:driverId`
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## Sample Request / Response
 ### Create Review
 `POST /reviews`
@@ -182,20 +93,4 @@ Collection: `reviews`
   - Unique partial index `{ bookingId: 1, userId: 1 }` với `isDeleted=false`
 
 ## Integration Notes / TODO
-- Event producer đang là stub để tích hợp broker thật.
-=======
-## Notes
-- Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
->>>>>>> origin/service/driver
-=======
-## Notes
-- Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
->>>>>>> origin/service/payment
-=======
-## Notes
-- Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
->>>>>>> origin/service/review
-=======
-## Notes
-- Event producer/consumer hiện là stub để tích hợp broker ở bước sau.
->>>>>>> origin/service/user
+- Event producer/consumer hiện đang là stub để tích hợp broker thật ở bước sau.
