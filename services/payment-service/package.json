@@ -6,11 +6,25 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "node --test test/smoke.test.js"
+    "test": "jest --runInBand --forceExit",
+    "test:smoke": "node --test test/smoke.test.js",
+    "test:unit": "jest --testPathPattern=test/payment.test.js --runInBand --forceExit",
+    "test:coverage": "jest --coverage --runInBand --forceExit"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.2.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 30000,
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ]
   }
 }
