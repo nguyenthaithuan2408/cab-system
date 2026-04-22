@@ -120,8 +120,15 @@ services:
       - JWT_PUBLIC_KEY=$JWT_PUBLIC_KEY
       - JWT_EXPIRES_IN=1d
       - REFRESH_TOKEN_EXPIRES_IN=7d
+      # Các biến bắt buộc mà auth-service kiểm tra khi khởi động
+      - REDIS_URL=redis://redis:6379
+      - JWT_ACCESS_SECRET=super_secret_access_key_for_cab_system_dev_32chars
+      - JWT_REFRESH_SECRET=super_secret_refresh_key_for_cab_system_dev_32chars
+      - KAFKA_BROKERS=kafka:9092
+      - NODE_ENV=development
     depends_on:
       - postgres
+      - redis
     networks:
       - cab-network
 
@@ -160,8 +167,17 @@ services:
     environment:
       - PORT=3004
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/cab_booking
+      # pricing-service đọc kết nối DB qua các biến PG riêng lẻ
+      - PGHOST=postgres
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=postgres
+      - PGDATABASE=cab_booking
+      - KAFKA_BROKERS=kafka:9092
+      - NODE_ENV=development
     depends_on:
       - postgres
+      - kafka
     networks:
       - cab-network
 
@@ -211,9 +227,14 @@ services:
     container_name: review-service
     environment:
       - PORT=3008
-      - MONGO_URI=mongodb://admin:password@mongodb:27017/review
+      # Thêm ?authSource=admin để xác thực đúng quyền root của MongoDB
+      - MONGO_URI=mongodb://admin:password@mongodb:27017/review?authSource=admin
+      - MONGO_DB_NAME=review_service_db
+      - KAFKA_BROKERS=kafka:9092
+      - NODE_ENV=development
     depends_on:
       - mongodb
+      - kafka
     networks:
       - cab-network
 
