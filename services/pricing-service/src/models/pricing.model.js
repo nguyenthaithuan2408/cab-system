@@ -49,10 +49,22 @@ const mapPricingRow = (row) => {
 	};
 };
 
+const initDatabase = async (pool) => {
+	try {
+		await pool.query(PRICING_CONFIG_SCHEMA);
+		await pool.query(PRICING_HISTORY_SCHEMA);
+		console.log("Pricing database tables initialized successfully.");
+	} catch (err) {
+		console.error("Error initializing database tables:", err);
+		throw err;
+	}
+};
+
 module.exports = {
 	PRICING_CONFIG_TABLE,
 	PRICING_HISTORY_TABLE,
 	PRICING_CONFIG_SCHEMA,
 	PRICING_HISTORY_SCHEMA,
 	mapPricingRow,
+	initDatabase,
 };

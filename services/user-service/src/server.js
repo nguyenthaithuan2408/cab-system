@@ -3,7 +3,7 @@ const app = require('./app');
 const { connectDatabase, initSchema, closeDatabase } = require('./config/database');
 const { startUserConsumers } = require('./events/user.consumer');
 
-const port = Number(process.env.PORT || 3002);
+const port = Number(process.env.PORT || 3009);
 
 let server;
 

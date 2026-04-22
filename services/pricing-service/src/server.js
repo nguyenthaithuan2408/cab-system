@@ -1,38 +1,48 @@
 const http = require("http");
-const app = require("./app");
+require("dotenv").config();
+const createApp = require("./app");
 const { pool } = require("./config/database");
+const { initDatabase } = require("./models/pricing.model");
 const { PricingRepository } = require("./repositories/pricing.repository");
 const { PricingService } = require("./services/pricing.service");
 const { PricingProducer } = require("./events/pricing.producer");
 const { startPricingConsumer } = require("./events/pricing.consumer");
+const { createPricingController } = require("./controllers/pricing.controller");
+const logger = require("./utils/logger");
 
-const PORT = Number(process.env.PORT || 4005);
+const PORT = Number(process.env.PORT || 3004);
 
 const startServer = async () => {
-	await pool.query("SELECT 1");
+	try {
+		await pool.query("SELECT 1");
+		await initDatabase(pool);
 
-	const pricingRepository = new PricingRepository();
-	const pricingProducer = new PricingProducer();
-	await pricingProducer.connect();
+		const pricingRepository = new PricingRepository();
+		const pricingProducer = new PricingProducer();
+		await pricingProducer.connect();
 
-	const pricingService = new PricingService({
-		pricingRepository,
-		pricingProducer,
-	});
+		const pricingService = new PricingService({
+			pricingRepository,
+			pricingProducer,
+		});
 
-	await startPricingConsumer({
-		service: pricingService,
-		producer: pricingProducer,
-	});
+		await startPricingConsumer({
+			service: pricingService,
+			producer: pricingProducer,
+		});
 
-	const server = http.createServer(app);
+		const pricingController = createPricingController(pricingService);
+		const app = createApp(pricingController);
 
-	server.listen(PORT, () => {
-		console.log(`Pricing service running on port ${PORT}`);
-	});
+		const server = http.createServer(app);
+
+		server.listen(PORT, () => {
+			logger.info(`Pricing service running on port ${PORT}`);
+		});
+	} catch (err) {
+		logger.error("Failed to start pricing service", { error: err.message, stack: err.stack });
+		process.exit(1);
+	}
 };
 
-startServer().catch((err) => {
-	console.error("Failed to start pricing service", err);
-	process.exit(1);
-});
+startServer();

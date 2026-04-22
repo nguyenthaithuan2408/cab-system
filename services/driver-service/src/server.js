@@ -3,7 +3,7 @@ const app = require('./app');
 const { connectDatabase, initSchema, closeDatabase } = require('./config/database');
 const { startDriverConsumers } = require('./events/driver.consumer');
 
-const port = Number(process.env.PORT || 3003);
+const port = Number(process.env.PORT || 3007);
 
 let server;
 

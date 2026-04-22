@@ -1,25 +1,42 @@
 const express = require("express");
-const pricingController = require("../controllers/pricing.controller");
+const Joi = require("joi");
+const { validateRequest } = require("../utils/validator");
+const { authenticateJWT } = require("../utils/auth");
 
-const router = express.Router();
+const setupPricingRoutes = (pricingController) => {
+	const router = express.Router();
 
-router.post("/calculate", async (req, res, next) => {
-	try {
-		const result = await pricingController.calculate(req.body);
-		res.status(200).json(result);
-	} catch (err) {
-		next(err);
-	}
-});
+	const calculateSchema = Joi.object({
+		zoneId: Joi.string().required(),
+		distanceKm: Joi.number().min(0).required(),
+		durationMin: Joi.number().min(0).required(),
+		bookingId: Joi.string().optional(),
+		demandFactor: Joi.number().optional(),
+		supplyFactor: Joi.number().optional(),
+		isPeak: Joi.boolean().optional(),
+		weather: Joi.string().valid("clear", "rain", "storm").optional(),
+		currency: Joi.string().optional(),
+	});
 
-router.get("/current", async (req, res, next) => {
-	try {
-		const zoneId = req.query.zoneId;
-		const result = await pricingController.getCurrent({ zoneId });
-		res.status(200).json(result);
-	} catch (err) {
-		next(err);
-	}
-});
+	const currentSchema = Joi.object({
+		zoneId: Joi.string().required(),
+	});
 
-module.exports = router;
+	router.post(
+		"/calculate",
+		authenticateJWT,
+		validateRequest(calculateSchema, "body"),
+		pricingController.calculate
+	);
+
+	router.get(
+		"/current",
+		authenticateJWT,
+		validateRequest(currentSchema, "query"),
+		pricingController.getCurrent
+	);
+
+	return router;
+};
+
+module.exports = setupPricingRoutes;
