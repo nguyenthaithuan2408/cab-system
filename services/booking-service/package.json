@@ -1,17 +1,35 @@
 {
   "name": "booking-service",
   "version": "1.0.0",
-  "description": "Booking Service for Cab Booking System",
+  "description": "Booking Service for Cab Booking System - Microservices Architecture",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --runInBand --forceExit",
+    "test:unit": "jest --testPathPattern=tests/unit --runInBand --forceExit",
+    "test:integration": "jest --testPathPattern=tests/integration --runInBand --forceExit",
+    "test:coverage": "jest --coverage --runInBand --forceExit"
   },
   "dependencies": {
+    "axios": "^1.7.2",
+    "axios-retry": "^4.4.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "helmet": "^7.1.0",
     "kafkajs": "^2.2.4",
-    "pg": "^8.12.0"
+    "morgan": "^1.10.0",
+    "pg": "^8.12.0",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 30000
   }
 }
